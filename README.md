@@ -86,7 +86,7 @@ Polynomials are created using function declaration, not via `new`.
       * prime factorization for constant polynomials larger than 1
       * "undefined" for 1
       * "undefined" for 0
-   * For finite fields, return:
+    * For finite fields, return:
       * irreducible polynomials factorization for constant polynomials with positive degree
       * "undefined" for constant polynomials larger than 1
       * empty array for 1
