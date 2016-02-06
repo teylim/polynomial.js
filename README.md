@@ -8,6 +8,6 @@ The use of the term "infinite fields" for {0, 1, 2, ...} is just a matter of pro
 Copyright 2016 @litena
 
 # Documentation
-Polynomials are created using function declaration, not via a "new" object. All functions are called via chaining.
+Polynomials are created using function declaration, not via `new`. All functions are called via chaining.
 
-`polynomial(array, indeterminate, characteristic)`
+`polynomial(array, indeterminate, characteristic)`: test
