@@ -397,7 +397,7 @@ try{
     return false;
   };
 
-  // The polynomial is defined as being "equal to" inputPolynomial2 if it is neither "less than" nor "greater than" inputPolynomial 2
+  // The polynomial is defined as being "equal to" inputPolynomial2 if it is neither "less than" nor "greater than" inputPolynomial2
   isEqualTo = function (inputPolynomial2) {
     if (typeof isBinaryOperable(inputPolynomial2).error !== "undefined") {
       return isBinaryOperable(inputPolynomial2);
