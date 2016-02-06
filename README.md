@@ -12,10 +12,10 @@ Copyright 2016 @litena
 # Documentation
 Polynomials are created using function declaration, not via `new`.
 
-* `polynomial(array, indeterminate, characteristic)`
-  * Create a polynomial object. `array` hold the coefficients of the polynomial, with the value at index *n* being the coefficient of the term with exponent *n*. `indeterminate` takes a string describing the indeterminate of the polynomial. `characteristic` denotes the characteristic of the field.
+* `polynomial(inputArray, inputIndeterminate, inputGalois)`
+  * Create a polynomial object. `inputArray` hold the coefficients of the polynomial, with the value at index *n* being the coefficient of the term with exponent *n*. `inputIndeterminate` takes a string describing the indeterminate of the polynomial. `inputGalois` denotes the characteristic of the field.
 
 # Available functions.
 
-* `.array()`
-  * a
+## `.array()`
+### Returns the array of coefficients, with the index *n* being the coefficient of the term with exponent *n*. Only integers are allowed. Values are automatically changed to be between {0, 1, ..., *p*}, where *p* is the characteristic of the field.
