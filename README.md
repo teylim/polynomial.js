@@ -108,4 +108,4 @@ Polynomials are created using function declaration, not via `new`.
 * **`.cycles(inputPolynomial2)`**
   * Let `inputPolynomial2` be *p* with indeterminate *x*. `.cycles(inputPolynomial2)` returns *p*, *xp*, *xxp*, ... until the degree is 1 less than the degree of the parent.
 * **`.generateCyclicCodeBasis(codeLength, codeDimension)`**
-  * Returns the polynomials corresponding to **a** basis of a cyclic code with code length `codeLength` and code dimension `codeDimension`, taking `indeterminate()` and `galois()` from its parent.
+  * Returns the polynomials corresponding to ***a*** basis of a cyclic code with code length `codeLength` and code dimension `codeDimension`, taking `indeterminate()` and `galois()` from its parent.
