@@ -10,8 +10,8 @@ The use of the term "infinite fields" for {0, 1, 2, ...} is just a matter of pro
 Copyright 2016 @litena
 
 # Documentation
-Polynomials are created using function declaration, not via `new`. All functions are called via chaining.
-
+Polynomials are created using function declaration, not via `new`.
 `polynomial(array, indeterminate, characteristic)`: Create a polynomial object. `array` hold the coefficients of the polynomial, with the value at index *n* being the coefficient of the term with exponent *n*. `indeterminate` takes a string describing the indeterminate of the polynomial. `characteristic` denotes the characteristic of the field.
 
+# All functions are called via chaining.
 `.array()`
