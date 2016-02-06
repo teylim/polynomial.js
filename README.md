@@ -10,4 +10,4 @@ Copyright 2016 @litena
 # Documentation
 Polynomials are created using function declaration, not via a "new" object. All functions are called via chaining.
 
-* polynomial(array, indeterminate, characteristic)
+`polynomial(array, indeterminate, characteristic)`
