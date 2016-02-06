@@ -13,7 +13,7 @@ Copyright 2016 @litena
 Polynomials are created using function declaration, not via `new`.
 
 * **`polynomial(inputArray, inputIndeterminate, inputGalois)`**
-  * Create a polynomial object. `inputArray` hold the integer coefficients of the polynomial, with the value at index *n* being the coefficient of the term with exponent *n*. `inputIndeterminate` takes a string describing the indeterminate of the polynomial. `inputGalois` denotes the prime (or Infinity\*) characteristic of the field.
+  * Create a polynomial object. `inputArray` holds the integer coefficients of the polynomial, with the value at index *n* being the coefficient of the term with exponent *n*. `inputIndeterminate` takes a string describing the indeterminate of the polynomial. `inputGalois` denotes the prime (or Infinity\*) characteristic of the field.
 \* When *Infinity* is specified, the coefficients take values in {0, 1, 2, ...}
 # Available functions.
 
