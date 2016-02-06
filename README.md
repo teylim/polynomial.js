@@ -17,7 +17,7 @@ Polynomials are created using function declaration, not via `new`.
 \* When *Infinity* is specified, the coefficients take values in {0, 1, 2, ...}
 # Available functions.
 
-* `.array()`
+* **`.array()`**
   * Returns the array of coefficients, with the index *n* being the coefficient of the term with exponent *n*. Values are automatically changed to be between {0, 1, ..., *p*}, where *p* is the characteristic of the field.
 * `.indeterminate()`
   * Returns the indeterminate of the polynomial. The default value is "x".
