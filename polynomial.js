@@ -604,7 +604,7 @@ try{
     return basis;
   };
 
-  // Generate basis of cyclic code with basis vectors corresponding to polynomials; takes indeterminate() and galois() from its parent
+  // Generate polynomials corresponding to a basis of a cyclic code; takes indeterminate() and galois() from its parent
   generateCyclicCodeBasis = function (codeLength, codeDimension) {
     var template, i, unity, minimals, dimension, search, initArray, minimalsChosen, minimal;
     // Code length must be a positive integer
