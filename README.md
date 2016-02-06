@@ -65,4 +65,11 @@ Polynomials are created using function declaration, not via `new`.
   * Returns `true` if `inputPolynomial2` is a factor of the polynomial and `false` otherwise.
 * `.hasRoot(inputPolynomial2)`
   * Returns `true` if the polynomial is zero when evaluated at `inputPolynomial2` and `false` otherwise.
- 
+* `.successor()`
+  * Define the increase in degree across polynomials as increasing and between polynomials having the same degree, the ordering 0, 1, ... for each coefficient as increasing. `.successor()` returns the next polynomial in this increasing sequence.
+* `.isLessThan(inputPolynomial2)`
+  * The polynomial is defined as being "less than" `inputPolynomial2` if `inputPolynomial2` can be obtained by finding the recursive successor of the polynomial. Returns `true` if this is true and `false` otherwise.
+* `.isGreaterThan(inputPolynomial2)`
+  * The polynomial is defined as being "greater than" `inputPolynomial2` if the polynomial can be obtained by finding the recursive successor of `inputPolynomial2`. Returns `true` if this is true and `false` otherwise.
+* `.isEqualTo(inputPolynomial2)`
+  * The polynomial is defined as being "equal to" `inputPolynomial2` if it is neither "less than" nor "greater than" `inputPolynomial2`. Returns `true` if this is true and `false` otherwise.
