@@ -73,3 +73,35 @@ Polynomials are created using function declaration, not via `new`.
   * The polynomial is defined as being "greater than" `inputPolynomial2` if the polynomial can be obtained by finding the recursive successor of `inputPolynomial2`. Returns `true` if this is true and `false` otherwise.
 * `.isEqualTo(inputPolynomial2)`
   * The polynomial is defined as being "equal to" `inputPolynomial2` if it is neither "less than" nor "greater than" `inputPolynomial2`. Returns `true` if this is true and `false` otherwise.
+* `.generateAdditiveGroupOf(inputPolynomial2)`
+  * Returns an array of the additive group modulo the polynomial using inputPolynomial2.
+* `.generateMultiplicativeGroupOf(inputPolynomial2)`
+  * Returns an array of the multiplicative group modulo the polynomial using inputPolynomial2.
+* `.primitiveElements()`
+  * Returns an array of the primitive elements of the polynomial.
+* `.factors()`
+  * Returns an array of the factors of the polynomial. The polynoial 0 has infinitely many factors
+    * For infinite fields, return:
+      * "undefined" for non-constant polynomials
+      * prime factorization for constant polynomials larger than 1
+      * "undefined" for 1
+      * "undefined" for 0
+   * For finite fields, return:
+      * irreducible polynomials factorization for constant polynomials with positive degree
+      * "undefined" for constant polynomials larger than 1
+      * empty array for 1
+      * "undefined" for 0
+* `.isIrreducible()`
+  * Returns `true` if the polynomial is irreducible (but possibly non-monic) and `false` otherwise.
+* `.isMinimalPolynomialOf(inputPolynomial2)`
+  * The polynomial in a field is the minimal polynomial of `inputPolynomial2` in the extension field if it is monic irreducible and has inputPolynomial2 as a root. Returns `true` if this is the case and `false` otherwise.
+* `.primitivePolynomialsInExtensionOf(inputPolynomial2)`
+  * Returns an array of the primitive polynomial corresponding to each primitive element returned by `.primitiveElements()`.
+* `.standard(inputPolynomial2)`
+  * Returns an array of the serialisation counting the occurences of a factor starting with the 0 followed recursively by successors.
+* `.fromStandard(standardArray)`
+  * Returns a polynomial from the deserialisation of `standardArray`, taking indeterminate() and galois() from its parent.
+* `.gcd(inputPolynomial2)`
+  * Returns the greatest common divisor of `inputPolynomial2` with the polynomial.
+* `.gcd(inputPolynomial2)`
+  * Returns the lowest common multiple of `inputPolynomial2` with the polynomial.
