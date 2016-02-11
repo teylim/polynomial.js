@@ -15,7 +15,7 @@ polynomial = function (inputArray, inputIndeterminate, inputGalois) {
 // Return object with key "error" if errors thrown
 try{
 
-  var modulo, zeros, dividedBy, i, array, indeterminate, galois, clone, reciprocal, degree, coefficient, leading, isMonic, isZero, print, differentiate, isBinaryOperable, add, subtract, multiply, power, givesQuotient, givesRemainder, of, additiveOrderOf, multiplicativeOrderOf, hasPrimitiveElement, hasFactor, hasRoot, successor, isLessThan, isGreaterThan, isEqualTo, additiveGroupOf, multiplicativeGroupOf, primitiveElements, factors, isIrreducible, isMinimalPolynomialOf, primitivePolynomialsInExtensionOf, standard, fromStandard, gcd, lcm, cycles, cyclicCodeBasis;
+  var modulo, zeros, dividedBy, inputArray, inputIndeterminate, inputGalois, i, array, indeterminate, galois, clone, reciprocal, degree, coefficient, leading, isMonic, isZero, print, differentiate, isBinaryOperable, add, subtract, multiply, power, givesQuotient, givesRemainder, of, additiveOrderOf, multiplicativeOrderOf, hasPrimitiveElement, hasFactor, hasRoot, successor, isLessThan, isGreaterThan, isEqualTo, additiveGroupOf, multiplicativeGroupOf, primitiveElements, factors, isIrreducible, isMinimalPolynomialOf, primitivePolynomialsInExtensionOf, standard, fromStandard, gcd, lcm, cycles, cyclicCodeBasis;
 
   //// PRIVATE FUNCTIONS
 
