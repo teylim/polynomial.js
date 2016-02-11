@@ -1,16 +1,23 @@
 var polynomial;
 
+/**
+ * @param {Array} inputArray the integer coefficients of the polynomial. The value at index *n* is the coefficient of the term with exponent *n*. In infinite fields, the coefficients must be non-negative.
+ * @param {String} inputIndeterminate the indeterminate of the polynomial. The default value is *x*.
+ * @param {Number} inputGalois the prime (or *Infinity*) characteristic of the field. The default value is *Infinity*. When *Infinity* is specified, the coefficients take values in *{0, 1, 2, ...}*.
+ * @returns {polynomial} the polynomial.
+ */
+// IMPORTANT NOTE
+// * The use of the term "infinite fields" for *{0, 1, 2, ...}* is just a matter of programming convenience. It is mathematically *wrong* because there does not exist an additive inverse or a multiplicative inverse for some elements.
+// * Define the increase in degree across polynomials as increasing and between polynomials having the same degree, the ordering *0, 1, ...* for each coefficient as increasing.
+
 polynomial = function (inputArray, inputIndeterminate, inputGalois) {
 
 // Return object with key "error" if errors thrown
 try{
 
-  var modulo, zeros, dividedBy, i, array, indeterminate, galois, clone, reciprocal, degree, coefficient, leading, isMonic, isZero, print, differentiate, isBinaryOperable, add, subtract, multiply, power, givesQuotient, givesRemainder, of, orderOf, hasPrimitiveElement, hasFactor, hasRoot, successor, isLessThan, isGreaterThan, isEqualTo, generateAdditiveGroupOf, generateMultiplicativeGroupOf, primitiveElements, factors, isIrreducible, isMinimalPolynomialOf, primitivePolynomialsInExtensionOf, standard, fromStandard, gcd, lcm, cycles, generateCyclicCodeBasis;
+  var modulo, zeros, dividedBy, i, array, indeterminate, galois, clone, reciprocal, degree, coefficient, leading, isMonic, isZero, print, differentiate, isBinaryOperable, add, subtract, multiply, power, givesQuotient, givesRemainder, of, additiveOrderOf, multiplicativeOrderOf, hasPrimitiveElement, hasFactor, hasRoot, successor, isLessThan, isGreaterThan, isEqualTo, additiveGroupOf, multiplicativeGroupOf, primitiveElements, factors, isIrreducible, isMinimalPolynomialOf, primitivePolynomialsInExtensionOf, standard, fromStandard, gcd, lcm, cycles, cyclicCodeBasis;
 
-  // IMPORTANT NOTE
-  // The use of the term "infinite fields" is just a matter of programming convenience. It is mathematically WRONG because there does not exist an additive inverse or a multiplicative inverse for some elements.
-
-  // PRIVATE FUNCTIONS
+  //// PRIVATE FUNCTIONS
 
   modulo = function (m, n) {
     if (!isFinite(n)) {
@@ -126,47 +133,84 @@ try{
 
   //// NO MORE CHANGES ARE TO BE MADE TO inputArray, inputIndeterminate AND inputGalois FROM HERE ON ////
 
+  /**
+   * @class polynomial
+   */
+
+  /**
+   * @returns {Array} the coefficients of the polynomial, with the index *n* being the coefficient of the term with exponent *n*. Values are automatically changed to be between {0, 1, ..., *p*}, where *p* is the characteristic of the field.
+   */
   array = function () {
     return inputArray.slice(0);
   };
 
+  /**
+   * @returns {String} the indeterminate of the polynomial.
+   */
   indeterminate = function () {
     return inputIndeterminate;
   };
 
+  /**
+   * @returns {Number} the characteristic of the field.
+   */
   galois = function () {
     return inputGalois;
   };
 
-  // The error is passed on
+  /**
+   * @returns {polynomial} a copy of the polynomial.
+   */
   clone = function () {
     return polynomial(array(), indeterminate(), galois());
   };
 
+  /**
+   * @returns {polynomial} the reciprocal polynomial.
+   */
   reciprocal = function () {
     return polynomial(array().reverse(), indeterminate(), galois());
   };
 
+  /**
+   * @returns {Number} the degree of the polynomial.
+   */
   degree = function () {
     return array().length - 1;
   };
 
+  /**
+   * @param {Number} n the index.
+   * @returns {Number} the coefficient of the term with exponent `n`.
+   */
   coefficient = function (n) {
     return array()[n];
   };
 
+  /**
+   * @returns {Number} the leading coefficient of the polynomial.
+   */
   leading = function () {
     return coefficient(degree());
   };
 
+  /**
+   * @returns {Boolean} the polynomial is monic.
+   */
   isMonic = function () {
     return leading() === 1;
   };
 
+  /**
+   * @returns {Boolean} the polynomial is *0*.
+   */
   isZero = function () {
     return leading() === 0;
   };
 
+  /**
+   * @returns {String} a formatted string of the polynomial, e.g., `GF(2): x ^ 2 + x + 1`.
+   */
   print = function () {
     var str, i;
     str = "GF(" + galois() + "): ";
@@ -190,7 +234,9 @@ try{
     return str;
   };
 
-  // Only differentiation; integration is not well-defined
+  /**
+   * @returns {polynomial} the formal derivative of the polynomial.
+   */
   differentiate = function () {
     var outputArray, i;
     outputArray = [];
@@ -200,6 +246,12 @@ try{
     return polynomial(outputArray, indeterminate(), galois());
   };
 
+  // Only differentiation; integration is not well-defined
+
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Object} the value with key `error` shows if the polynomials have different indeterminates or different orders of fields.
+   */
   // Some binary operation can be done only if both operands have the same indeterminate and order of field
   isBinaryOperable = function (inputPolynomial2) {
     var error = undefined;
@@ -212,6 +264,10 @@ try{
     return {error:error};
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial
+   * @returns {polynomial} the polynomial obtained when `inputPolynomial2` is added to the polynomial, if possible. Otherwise, returns an object with key `error`.
+   */
   add = function (inputPolynomial2) {
     var outputArray, i;
     if (typeof isBinaryOperable(inputPolynomial2).error !== "undefined") {
@@ -227,6 +283,10 @@ try{
     return polynomial(outputArray, indeterminate(), galois());
   }
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {polynomial} the polynomial obtained when `inputPolynomial2` is subtracted from the polynomial, if possible. Otherwise, returns an object with key `error`.
+   */
   subtract = function (inputPolynomial2) {
     var outputArray, i;
     if (typeof isBinaryOperable(inputPolynomial2).error !== "undefined") {
@@ -242,6 +302,10 @@ try{
     return polynomial(outputArray, indeterminate(), galois());
   }
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {polynomial} the polynomial obtained when `inputPolynomial2` is multiplied to the polynomial, if possible. Otherwise, returns an object with key `error`.
+   */
   multiply = function (inputPolynomial2) {
     var outputArray, i, j;
     if (typeof isBinaryOperable(inputPolynomial2).error !== "undefined") {
@@ -256,6 +320,10 @@ try{
     return polynomial(outputArray, indeterminate(), galois());
   }
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {polynomial} the product of `n` repetitions of the polynomial, if possible. Otherwise, returns an object with key `error`.
+   */
   power = function (n) {
     var outputPolynomial, i;
     // Power must be non-negative integer
@@ -272,6 +340,10 @@ try{
     return outputPolynomial;
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {polynomial} the *largest* polynomial which product with `inputPolynomial2` is *smaller than* or *equal to* the polynomial, if possible. Otherwise, returns an object with key `error`.
+   */
   givesQuotient = function (inputPolynomial2) {
     var result;
     result = dividedBy(inputPolynomial2);
@@ -282,6 +354,10 @@ try{
     }
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {polynomial} the *smallest* non-negative polynomial obtained when `inputPolynomial2` and its products with powers of *x* are repeatedly subtracted from the polynomial, if possible. Otherwise, returns an object with key `error`.
+   */
   givesRemainder = function (inputPolynomial2) {
     var result;
     result = dividedBy(inputPolynomial2);
@@ -292,6 +368,10 @@ try{
     }
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {polynomial} the polynomial obtained when `inputPolynomial2` is substituted at every instance of the indeterminate. The substituted indeterminate is evaluated in the original field.
+   */
   // Composition retains order of finite field but uses new indeterminate
   of = function (inputPolynomial2) {
     var outputPolynomial, i;
@@ -302,8 +382,32 @@ try{
     return outputPolynomial;
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Number} the smallest positive integer *k* where the `inputPolynomial2` multiplied by *k* gives *0*, if possible.
+   */
+  // Get additive order of inputPolynomial2 modulo the current polynomial
+  additiveOrderOf = function (inputPolynomial2) {
+    var sum, i;
+    // Additive order is undefined for infinite fields
+    if (!isFinite(galois())) {
+      return;
+    }
+    sum = polynomial(inputPolynomial2.array(), inputPolynomial2.indeterminate(), galois()).givesRemainder(polynomial(array(), inputPolynomial2.indeterminate(), galois()));
+    i = 1;
+    while(!sum.isZero()) {
+      sum = sum.add(polynomial(inputPolynomial2.array(), inputPolynomial2.indeterminate(), galois())).givesRemainder(polynomial(array(), inputPolynomial2.indeterminate(), galois()));
+      i += 1;
+    }
+    return i;
+  };
+
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Number} the smallest positive integer *k* where `inputPolynomial2` raised to the power of *k* gives *1*, if possible.
+   */
   // Get multiplicative order of inputPolynomial2 modulo the current polynomial
-  orderOf = function (inputPolynomial2) {
+  multiplicativeOrderOf = function (inputPolynomial2) {
     var prod, i;
     // Multiplicative order is undefined for infinite fields
     if (!isFinite(galois())) {
@@ -325,20 +429,33 @@ try{
     return i;
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Boolean} `inputPolynomial2` is a primitive element of the polynomial
+   */
   hasPrimitiveElement = function (inputPolynomial2) {
-    return orderOf(inputPolynomial2) === Math.pow(galois(), degree()) - 1;
+    return multiplicativeOrderOf(inputPolynomial2) === Math.pow(galois(), degree()) - 1;
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Boolean} `inputPolynomial2` is a factor of the polynomial
+   */
   hasFactor = function (inputPolynomial2) {
     return givesRemainder(inputPolynomial2).isZero();
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Boolean} the polynomial is *0* when evaluated at `inputPolynomial2`.
+   */
   hasRoot = function (inputPolynomial2) {
     return of(inputPolynomial2).givesRemainder(polynomial(array(), inputPolynomial2.indeterminate(), galois())).isZero();
   };
 
-  // Define the increase in degree across polynomials as increasing and
-  // between polynomials having the same degree, the ordering 0, 1, ... for each coefficient as increasing
+  /**
+   * @returns {polynomial} the smallest polynomial which is *greater than* the polynomial.
+   */
   successor = function () {
     var candidate, i;
     candidate = array();
@@ -351,7 +468,10 @@ try{
     }
   };
 
-  // The polynomial is defined as being "less than" inputPolynomial2 if inputPolynomial2 can be obtained by finding the recursive successor of the polynomial
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Boolean} `inputPolynomial2` can be obtained by finding the recursive successor of the polynomial.
+   */
   isLessThan = function (inputPolynomial2) {
     var i;
     if (typeof isBinaryOperable(inputPolynomial2).error !== "undefined") {
@@ -374,7 +494,10 @@ try{
     return false;
   };
 
-  // The polynomial is defined as being "greater than" inputPolynomial2 if the polynomial can be obtained by finding the recursive successor of inputPolynomial2
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Boolean} the polynomial can be obtained by finding the recursive successor of `inputPolynomial2`.
+   */
   isGreaterThan = function (inputPolynomial2) {
     var i;
     if (typeof isBinaryOperable(inputPolynomial2).error !== "undefined") {
@@ -397,7 +520,10 @@ try{
     return false;
   };
 
-  // The polynomial is defined as being "equal to" inputPolynomial2 if it is neither "less than" nor "greater than" inputPolynomial2
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Boolean} the polynomial is neither "less than" nor "greater than" `inputPolynomial2`.
+   */
   isEqualTo = function (inputPolynomial2) {
     if (typeof isBinaryOperable(inputPolynomial2).error !== "undefined") {
       return isBinaryOperable(inputPolynomial2);
@@ -405,8 +531,11 @@ try{
     return !isLessThan(inputPolynomial2) && !isGreaterThan(inputPolynomial2);
   };
 
-  // Generate the additive group modulo the polynomial using inputPolynomial2
-  generateAdditiveGroupOf = function (inputPolynomial2) {
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Array} the additive group of `inputPolynomial2` modulo the polynomial.
+   */
+  additiveGroupOf = function (inputPolynomial2) {
     var generator, generated, generatedArray;
     generator = polynomial(inputPolynomial2.array(), inputPolynomial2.indeterminate(), galois()).givesRemainder(polynomial(array(), inputPolynomial2.indeterminate(), galois()));
     generated = generator.clone();
@@ -420,8 +549,11 @@ try{
     return generatedArray;
   };
 
-  // Generate the multiplicative group modulo the polynomial using inputPolynomial2
-  generateMultiplicativeGroupOf = function (inputPolynomial2) {
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Array} the multiplicative group of `inputPolynomial2` modulo the polynomial.
+   */
+  multiplicativeGroupOf = function (inputPolynomial2) {
     var generator, generated, generatedArray;
     generator = polynomial(inputPolynomial2.array(), inputPolynomial2.indeterminate(), galois()).givesRemainder(polynomial(array(), inputPolynomial2.indeterminate(), galois()));
     generated = generator.clone();
@@ -435,6 +567,9 @@ try{
     return generatedArray;
   };
 
+  /**
+   * @returns {Array} the primitive elements of the polynomial.
+   */
   primitiveElements = function () {
     var primitivesArray, primitive;
     if (!isFinite(galois())) {
@@ -454,20 +589,22 @@ try{
     return primitivesArray;
   };
 
+  /**
+   * @returns {Array} the factors of the polynomial. The polynoial 0 has infinitely many factors.
+   * * For infinite fields, returns
+   *   * "undefined" for non-constant polynomials,
+   *   * prime factorization for constant polynomials larger than *1*,
+   *   * "undefined" for *1* and
+   *   * "undefined" for *0*.
+   * * For finite fields, returns
+   *   * irreducible polynomials factorization for constant polynomials with positive degree,
+   *   * "undefined" for constant polynomials larger than *1*,
+   *   * empty array for *1* and 
+   *   * "undefined" for *0*.
+   */
   factors = function () {
     var dividend, factorsArray, factor;
     factorsArray = [];
-    // The polynoial 0 has infinitely many factors
-    // For infinite fields, return:
-    // (-) "undefined" for non-constant polynomials
-    // (-) prime factorization for constant polynomials larger than 1
-    // (-) "undefined" for 1
-    // (-) "undefined" for 0
-    // For finite fields, return:
-    // (-) irreducible polynomials factorization for constant polynomials with positive degree
-    // (-) "undefined" for constant polynomials larger than 1
-    // (-) empty array for 1
-    // (-) "undefined" for 0
     if (isZero()) {
       return;
     }
@@ -494,15 +631,28 @@ try{
     return factorsArray;
   };
 
+  // hasRoots is not defined because there are infinitely many roots in infinitely many polynomials
+
+  /**
+   * @returns {Boolean} the polynomial is irreducible (but possibly non-monic).
+   */
   isIrreducible = function () {
     return isFinite(galois()) && degree() > 0 && (isMonic() ? factors().length === 1 : factors().length === 1);
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Boolean} the polynomial in a field is the minimal polynomial of `inputPolynomial2` in the extension field.
+   */
   // The polynomial in a field is the minimal polynomial of inputPolynomial2 in the extension field if it is monic irreducible and has inputPolynomial2 as a root
   isMinimalPolynomialOf = function (inputPolynomial2) {
     return isMonic() && isIrreducible() && hasRoot(inputPolynomial2);
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Array} the primitive polynomials corresponding to the primitive elements returned by `.primitiveElements()`.
+   */
   primitivePolynomialsInExtensionOf = function (inputPolynomial2) {
     var candidates, i, primitivePolynomials, primitivePolynomial;
     candidates = primitiveElements();
@@ -517,7 +667,10 @@ try{
     return primitivePolynomials;
   };
 
-  // Serialisation counting the occurences of a factor starting with the 0 followed recursively by successors
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Array} the serialisation counting the occurences of a factor starting with the *0* followed recursively by successors.
+   */
   standard = function () {
     var factorsArray, standardArray, index, p, i;
     factorsArray = factors();
@@ -542,7 +695,10 @@ try{
     return standardArray;
   };
 
-  // Deserialisation taking indeterminate() and galois() from its parent
+  /**
+   * @param {Array} standardArray a standard array.
+   * @returns {polynomial} the deserialisation of `standardArray`, taking `indeterminate()` and `galois()` from the polynomial.
+   */
   fromStandard = function (standardArray) {
     var outputPolynomial, p, i;
     outputPolynomial = polynomial([1], indeterminate(), galois());
@@ -554,6 +710,10 @@ try{
     return outputPolynomial;
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {polynomial} the greatest common divisor of the polynomial and `inputPolynomial2`.
+   */
   gcd = function (inputPolynomial2) {
     var standardArray, standardArray2, outputArray, i;
     if (typeof isBinaryOperable(inputPolynomial2).error !== "undefined") {
@@ -568,6 +728,10 @@ try{
     return fromStandard(outputArray);
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {polynomial} the lowest common multiple of the polynomial and `inputPolynomial2`.
+   */
   lcm = function (inputPolynomial2) {
     var standardArray, standardArray2, outputArray, i;
     if (typeof isBinaryOperable(inputPolynomial2).error !== "undefined") {
@@ -592,6 +756,10 @@ try{
     return fromStandard(outputArray);
   };
 
+  /**
+   * @param {polynomial} inputPolynomial2 another polynomial.
+   * @returns {Array} the polynomials *p, xp, xxp, ...*, where *p* is `inputPolynomial2` and *x* is once the indeterminate of the polynomial. The degree of the last element is *1* less than the degree of the polynomial.
+   */
   // Used to generate basis of cyclic code
   cycles = function (inputPolynomial2) {
     var basis, basisVector;
@@ -604,8 +772,13 @@ try{
     return basis;
   };
 
-  // Generate polynomials corresponding to a basis of a cyclic code; takes indeterminate() and galois() from its parent
-  generateCyclicCodeBasis = function (codeLength, codeDimension) {
+  /**
+   * @param {Number} codeLength the length of the desired code.
+   * @param {Number} codeDimension the dimension of the desired code.
+   * @returns {Array} the polynomials corresponding to *a* basis of a cyclic code with code length `codeLength` and code dimension `codeDimension`, taking `indeterminate()` and `galois()` from the polynomial.
+   */
+  // Generate polynomials corresponding to a basis of a cyclic code; takes indeterminate() and galois() from the polynomial
+  cyclicCodeBasis = function (codeLength, codeDimension) {
     var template, i, unity, minimals, dimension, search, initArray, minimalsChosen, minimal;
     // Code length must be a positive integer
     if (codeLength !== parseInt(codeLength, 10)) {
@@ -701,7 +874,8 @@ try{
     givesQuotient: givesQuotient,
     givesRemainder: givesRemainder,
     of: of,
-    orderOf: orderOf,
+    additiveOrderOf: additiveOrderOf,
+    multiplicativeOrderOf: multiplicativeOrderOf,
     hasPrimitiveElement: hasPrimitiveElement,
     hasFactor: hasFactor,
     hasRoot: hasRoot,
@@ -709,8 +883,8 @@ try{
     isLessThan: isLessThan,
     isGreaterThan: isGreaterThan,
     isEqualTo: isEqualTo,
-    generateAdditiveGroupOf: generateAdditiveGroupOf,
-    generateMultiplicativeGroupOf: generateMultiplicativeGroupOf,
+    additiveGroupOf: additiveGroupOf,
+    multiplicativeGroupOf: multiplicativeGroupOf,
     primitiveElements: primitiveElements,
     factors: factors,
     isIrreducible: isIrreducible,
@@ -721,7 +895,7 @@ try{
     gcd: gcd,
     lcm: lcm,
     cycles: cycles,
-    generateCyclicCodeBasis: generateCyclicCodeBasis
+    cyclicCodeBasis: cyclicCodeBasis
   };
 
 } catch (error) {
