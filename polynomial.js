@@ -779,7 +779,7 @@ try{
    */
   // Generate polynomials corresponding to a basis of a cyclic code; takes indeterminate() and galois() from the polynomial
   cyclicCodeBasis = function (codeLength, codeDimension) {
-    var template, i, unity, minimals, dimension, search, initArray, minimalsChosen, minimal, polynomialsArray, outputArray;
+    var template, i, unity, minimals, dimension, search, initArray, minimalsChosen, minimal, polynomialsArray, outputArray, j;
     // Code length must be a positive integer
     if (codeLength !== parseInt(codeLength, 10)) {
       throw "Code length is not an integer";
@@ -854,6 +854,9 @@ try{
     outputArray = [];
     for (i = 0; i < polynomialsArray.length; i += 1) {
       outputArray[i] = polynomialsArray[i].array();
+      for (j = outputArray[i].length; j < codeLength; j += 1) {
+        outputArray[i][j] = 0;
+      }
     }
     return outputArray;
   };
