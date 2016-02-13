@@ -775,7 +775,7 @@ try{
   /**
    * @param {Number} codeLength the length of the desired code.
    * @param {Number} codeDimension the dimension of the desired code.
-   * @returns {Array} the arrays corresponding to *a* basis of a cyclic code with code length `codeLength` and code dimension `codeDimension`, taking galois() from the polynomial.
+   * @returns {Array} the arrays corresponding to *a* basis of a cyclic code with code length `codeLength` and code dimension `codeDimension`, taking `galois()` from the polynomial.
    */
   // Generate polynomials corresponding to a basis of a cyclic code; takes indeterminate() and galois() from the polynomial
   cyclicCodeBasis = function (codeLength, codeDimension) {
