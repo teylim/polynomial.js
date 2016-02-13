@@ -298,7 +298,7 @@
 
 **codeDimension**: `Number`, the dimension of the desired code.
 
-**Returns**: `Array`, the polynomials corresponding to *a* basis of a cyclic code with code length `codeLength` and code dimension `codeDimension`, taking `indeterminate()` and `galois()` from the polynomial.
+**Returns**: `Array`, the arrays corresponding to *a* basis of a cyclic code with code length `codeLength` and code dimension `codeDimension`, taking galois() from the polynomial.
 
 
 
