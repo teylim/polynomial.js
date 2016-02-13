@@ -775,11 +775,11 @@ try{
   /**
    * @param {Number} codeLength the length of the desired code.
    * @param {Number} codeDimension the dimension of the desired code.
-   * @returns {Array} the polynomials corresponding to *a* basis of a cyclic code with code length `codeLength` and code dimension `codeDimension`, taking `indeterminate()` and `galois()` from the polynomial.
+   * @returns {Array} the arrays corresponding to *a* basis of a cyclic code with code length `codeLength` and code dimension `codeDimension`.
    */
   // Generate polynomials corresponding to a basis of a cyclic code; takes indeterminate() and galois() from the polynomial
   cyclicCodeBasis = function (codeLength, codeDimension) {
-    var template, i, unity, minimals, dimension, search, initArray, minimalsChosen, minimal;
+    var template, i, unity, minimals, dimension, search, initArray, minimalsChosen, minimal, polynomialsArray, outputArray;
     // Code length must be a positive integer
     if (codeLength !== parseInt(codeLength, 10)) {
       throw "Code length is not an integer";
@@ -850,7 +850,12 @@ try{
         minimal = minimal.multiply(minimals[i]);
       }
     }
-    return unity.cycles(minimal);
+    polynomialsArray = unity.cycles(minimal);
+    outputArray = [];
+    for (i = 0; i < polynomialsArray.length; i += 1) {
+      outputArray[i] = polynomialsArray[i].array();
+    }
+    return outputArray;
   };
 
   return {

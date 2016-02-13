@@ -129,7 +129,7 @@
   ["seventh element multiplicativeGroupOf(alpha) in x ^ 4 + x ^ 3 + 1 of order 2 is alpha ^ 2 + alpha + 1", polynomial([1, 0, 0, 1, 1], "x", 2).multiplicativeGroupOf(polynomial([0, 1], "alpha", Infinity))[6].print(), "GF(2): alpha ^ 2 + alpha + 1"],
   ["last element multiplicativeGroupOf(alpha) in x ^ 4 + x ^ 3 + 1 of order 2 is 1", polynomial([1, 0, 0, 1, 1], "x", 2).multiplicativeGroupOf(polynomial([0, 1], "alpha", Infinity))[14].print(), "GF(2): 1"],
   ["primitiveElements() of x ^ 4 + x ^ 3 + 1 of order 2 has EulerTotient(2 ^ 4 - 1) = 8 elements", polynomial([1, 0, 0, 1, 1], "x", 2).primitiveElements().length, 8],
-  //["primitiveElements() of x ^ 5 + 2 x + 2 of order 3 has EulerTotient(3 ^ 5- 1) = 110 elements", polynomial([2, 2, 0, 0, 0, 1], "x", 3).primitiveElements().length, 110],
+  ["primitiveElements() of x ^ 5 + 2 x + 2 of order 3 has EulerTotient(3 ^ 5- 1) = 110 elements", polynomial([2, 2, 0, 0, 0, 1], "x", 3).primitiveElements().length, 110],
   ["factors() of x in infinite field is undefined", polynomial([0, 1], "x", Infinity).factors(), undefined],
   ["number of factors() of 2 * 3 * 3 * 5 * 7 * 11 = 6930 in infinite field is 6", polynomial([6930], "x", Infinity).factors().length, 6],
   ["factors() of 1 in infinite field is undefined", polynomial([0, 1], "x", Infinity).factors(), undefined],
@@ -160,9 +160,9 @@
   ["lcm() of x ^ 3 + x ^ 2 + 2 x + 2 and x ^ 3 + 2 x ^ 2 + 2 x + 1 in order 3 is x ^ 6 + 2", polynomial([2, 2, 1, 1], "x", 3).lcm(polynomial([1, 2, 2, 1], "x", 3)).print(), "GF(3): x ^ 4 + x ^ 2 + 1"],
   ["number of cycles() of degree 3 polynomial up to degree 6 is 4", polynomial([-1, 0, 0, 0, 0, 0, 0, 1], "x", 2).cycles(polynomial([1, 0, 1, 1], "y", 2)).length, 4],
   ["third element of cycles() of y ^ 3 + y + 1 up to degree 6 is y ^ 5 + y ^ 4 + y ^ 2", polynomial([-1, 0, 0, 0, 0, 0, 0, 1], "x", 2).cycles(polynomial([1, 0, 1, 1], "y", 2))[2].print(), "GF(2): y ^ 5 + y ^ 4 + y ^ 2"],
-  ["length of cyclicCodeBasis() of code length 7 and code dimension 3 is code dimension 3", polynomial([0], "x", 2).cyclicCodeBasis(7, 3).length, 3],
-  ["second element of cyclicCodeBasis() of code length 7 and code dimension 3 is x * (x + 1) * (x ^ 3 + x + 1) = x * (x ^ 4 + x ^ 3 + x ^ 2 + 1) = x ^ 5 + x ^ 4 + x ^ 3 + x", polynomial([0], "x", 2).cyclicCodeBasis(7, 3)[1].print(), "GF(2): x ^ 5 + x ^ 4 + x ^ 3 + x"],
-  ["second element of cyclicCodeBasis() of code length 7 and code dimension 4 is x * (x ^ 3 + x + 1) = x ^ 4 + x ^ 2 + x", polynomial([0], "x", 2).cyclicCodeBasis(7, 4)[1].print(), "GF(2): x ^ 4 + x ^ 2 + x"],
+  ["length of cyclicCodeBasis() of code length 7 and code dimension 3 is 3", polynomial([0], "x", 2).cyclicCodeBasis(7, 3).length, 3],
+  ["second element of cyclicCodeBasis() of code length 7 and code dimension 3 is x * (x + 1) * (x ^ 3 + x + 1) = x * (x ^ 4 + x ^ 3 + x ^ 2 + 1) = x ^ 5 + x ^ 4 + x ^ 3 + x", polynomial(polynomial([0], "x", 2).cyclicCodeBasis(7, 3)[1], "x", 2).print(), "GF(2): x ^ 5 + x ^ 4 + x ^ 3 + x"],
+  ["second element of cyclicCodeBasis() of code length 7 and code dimension 4 is x * (x ^ 3 + x + 1) = x ^ 4 + x ^ 2 + x", polynomial(polynomial([0], "x", 2).cyclicCodeBasis(7, 4)[1], "x", 2).print(), "GF(2): x ^ 4 + x ^ 2 + x"],
 
   []);
   </script>
