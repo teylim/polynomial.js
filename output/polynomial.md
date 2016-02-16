@@ -22,7 +22,11 @@
 ## Class: polynomial
 
 
-### polynomial.array() 
+### polynomial.array(width) 
+
+**Parameters**
+
+**width**: `Number`, the optional length of the array desired, padded with zeros. If it is not specified, the array is returned as it is.
 
 **Returns**: `Array`, the coefficients of the polynomial, with the index *n* being the coefficient of the term with exponent *n*. Values are automatically changed to be between {0, 1, ..., *p*}, where *p* is the characteristic of the field.
 

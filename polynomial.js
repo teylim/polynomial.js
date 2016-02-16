@@ -9,7 +9,6 @@ var polynomial;
 // IMPORTANT NOTE
 // * The use of the term "infinite fields" for *{0, 1, 2, ...}* is just a matter of programming convenience. It is mathematically *wrong* because there does not exist an additive inverse or a multiplicative inverse for some elements.
 // * Define the increase in degree across polynomials as increasing and between polynomials having the same degree, the ordering *0, 1, ...* for each coefficient as increasing.
-
 polynomial = function (inputArray, inputIndeterminate, inputGalois) {
 
 // Return object with key "error" if errors thrown
@@ -138,10 +137,19 @@ try{
    */
 
   /**
+   * @param {Number} width the optional length of the array desired, padded with zeros. If it is not specified, the array is returned as it is.
    * @returns {Array} the coefficients of the polynomial, with the index *n* being the coefficient of the term with exponent *n*. Values are automatically changed to be between {0, 1, ..., *p*}, where *p* is the characteristic of the field.
    */
-  array = function () {
-    return inputArray.slice(0);
+  array = function (width) {
+    var width, outputArray;
+    if (typeof width === "undefined") {
+      return inputArray.slice(0);
+    }
+    outputArray = inputArray.slice(0, Math.min(inputArray.length, width));
+    while (outputArray.length < width) {
+      outputArray.push(0);
+    }
+    return outputArray;
   };
 
   /**
@@ -853,10 +861,7 @@ try{
     polynomialsArray = unity.cycles(minimal);
     outputArray = [];
     for (i = 0; i < polynomialsArray.length; i += 1) {
-      outputArray[i] = polynomialsArray[i].array();
-      for (j = outputArray[i].length; j < codeLength; j += 1) {
-        outputArray[i][j] = 0;
-      }
+      outputArray[i] = polynomialsArray[i].array(codeLength);
     }
     return outputArray;
   };
